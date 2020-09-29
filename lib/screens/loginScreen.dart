@@ -1,4 +1,8 @@
+import 'package:Pool/models/loginResponseModel.dart';
+import 'package:Pool/viewModels/validateLogin.dart';
+import 'package:Pool/screens/landingPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'signUpScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,15 +12,31 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ValidateLoginModel validationService = Provider.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(true),
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: Icon(Icons.arrow_back),
+                ),
+              ),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 60, 0, 10),
+                margin: EdgeInsets.fromLTRB(0, 30, 0, 10),
                 child: Text("Welcome Back!",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
@@ -35,13 +55,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     contentPadding:
                         EdgeInsets.only(top: 20), // add padding to adjust text
                     isDense: true,
+                    labelText: "Email",
                     hintText: "Email",
+                    errorText: validationService.email.error,
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(
                           top: 15), // add padding to adjust icon
                       child: Icon(Icons.email),
                     ),
                   ),
+                  onChanged: (value) => validationService.changeEmail(value),
                 ),
               ),
               Padding(
@@ -51,13 +74,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     contentPadding:
                         EdgeInsets.only(top: 20), // add padding to adjust text
                     isDense: true,
+                    labelText: "Password",
                     hintText: "Password",
+                    errorText: validationService.password.error,
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(
                           top: 15), // add padding to adjust icon
                       child: Icon(Icons.lock_open),
                     ),
                   ),
+                  onChanged: (value) => validationService.chnagePassword(value),
                 ),
               ),
               Container(
@@ -83,8 +109,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       color: Colors.blue,
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
+                        if (!validationService.isSuccessful) {
+                          return;
+                        } else {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LandingPage()));
+                        }
                       },
                       child: Text(
                         "Login",

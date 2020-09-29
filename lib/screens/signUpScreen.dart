@@ -14,9 +14,17 @@ class _SignUpState extends State<SignUp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            GestureDetector(
+              onTap: () => Navigator.of(context).pop(true),
+              child: Container(
+                alignment: Alignment.topLeft,
+                padding: EdgeInsets.fromLTRB(10, 40, 0, 0),
+                child: Icon(Icons.arrow_back),
+              ),
+            ),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.fromLTRB(0, 90, 0, 0),
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text("Sign Up",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
             ),
@@ -109,7 +117,7 @@ class _SignUpState extends State<SignUp> {
                     color: Colors.blue,
                     onPressed: () {},
                     child: Text(
-                      "SIGN uP",
+                      "SIGN UP",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
