@@ -1,4 +1,8 @@
+import 'package:Pool/viewModels/signUpViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'landingPage.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -8,6 +12,8 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
+    SignUpViewModel signUpViewModel = Provider.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -51,6 +57,7 @@ class _SignUpState extends State<SignUp> {
                     child: Icon(Icons.account_circle),
                   ),
                 ),
+                onChanged: (value) => signUpViewModel.saveName(value),
               ),
             ),
             Padding(
@@ -67,6 +74,7 @@ class _SignUpState extends State<SignUp> {
                     child: Icon(Icons.email),
                   ),
                 ),
+                onChanged: (value) => signUpViewModel.changeEmail(value),
               ),
             ),
             Padding(
@@ -83,6 +91,7 @@ class _SignUpState extends State<SignUp> {
                     child: Icon(Icons.lock_open),
                   ),
                 ),
+                onChanged: (value) => signUpViewModel.chnagePassword(value),
               ),
             ),
             Padding(
@@ -99,6 +108,7 @@ class _SignUpState extends State<SignUp> {
                     child: Icon(Icons.lock_open),
                   ),
                 ),
+                onChanged: (value) => signUpViewModel.confirmPaasowrd(value),
               ),
             ),
             Padding(
@@ -115,7 +125,16 @@ class _SignUpState extends State<SignUp> {
                       borderRadius: new BorderRadius.circular(18),
                     ),
                     color: Colors.blue,
-                    onPressed: () {},
+                    onPressed: () async {
+                      bool isSuccessful =
+                          await signUpViewModel.postSignUpDetails();
+                      if (!isSuccessful) {
+                        return;
+                      } else {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LandingPage()));
+                      }
+                    },
                     child: Text(
                       "SIGN UP",
                       style: TextStyle(color: Colors.white),

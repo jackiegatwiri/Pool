@@ -1,3 +1,4 @@
+import 'package:Pool/viewModels/signUpViewModel.dart';
 import 'package:Pool/viewModels/validateLogin.dart';
 import 'package:Pool/screens/onBoardingScreen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => ValidateLoginModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SignUpViewModel(),
         )
       ],
       child: MaterialApp(

@@ -108,8 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: new BorderRadius.circular(18),
                       ),
                       color: Colors.blue,
-                      onPressed: () {
-                        if (!validationService.isSuccessful) {
+                      onPressed: () async {
+                        bool isSuccessful =
+                            await validationService.postLoginDetails();
+                        if (!isSuccessful) {
                           return;
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
